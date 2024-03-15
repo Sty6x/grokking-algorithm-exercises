@@ -36,20 +36,28 @@ hashTable.set_hashed_item("jonny", []);
 // second -> thom and jonny
 var root = hashTable.get_hashed_item("root");
 var queue = __spreadArray([], root, true);
-var target = "peggy";
+var target = "jonny";
+var checked = new Set();
 while (queue.length !== 0) {
-    // pop off first item
     var dequeued = queue.shift();
     if (dequeued === target) {
         console.log("".concat(dequeued, " is here!"));
         break;
     }
-    console.log(dequeued);
-    console.log(queue);
+    console.log({ dequeued: dequeued, queue: queue });
     var neighbors = hashTable.get_hashed_item(dequeued);
+    checked.add(dequeued);
+    console.log({ checked: checked });
     if (neighbors.length !== 0) {
         for (var n = 0; n < neighbors.length; n++) {
-            queue.push(neighbors[n]);
+            var checkNode = checked.has(neighbors[n]);
+            if (checkNode === false) {
+                queue.push(neighbors[n]);
+            }
         }
+        continue;
+    }
+    if (queue.length === 0) {
+        console.log("".concat(target, " is not here."));
     }
 }

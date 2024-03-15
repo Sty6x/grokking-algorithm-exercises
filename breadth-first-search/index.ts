@@ -14,8 +14,8 @@ hashTable.set_hashed_item("thom", []);
 hashTable.set_hashed_item("jonny", []);
 
 // go through each neighboring node from the root node "root"
-// neighboring of root ["alice","bob","claire"]
-// go through each node and see if they are "Jonny"
+// neighbors of root ["alice","bob","claire"]
+// go through each node and see if have "jonny" value
 //
 // first -> alice
 // first -> bob
@@ -30,24 +30,32 @@ hashTable.set_hashed_item("jonny", []);
 
 const root = hashTable.get_hashed_item("root");
 let queue:Array<string> = [...root]
-const target:string = "peggy"
+const target:string = "jonny"
 
 
-
+  let checked =new Set();
 while (queue.length !== 0) {
-  // pop off first item
   const dequeued = queue.shift() as string;
   if(dequeued === target){
     console.log(`${dequeued} is here!`)
     break;
   }
-  console.log(dequeued)
-  console.log(queue)
+
+  console.log({dequeued,queue})
   const neighbors = hashTable.get_hashed_item(dequeued);
+  checked.add(dequeued);
+  console.log({checked})
   if(neighbors.length !== 0){
     for(let n = 0; n < neighbors.length; n++){
-      queue.push(neighbors[n]);
+    const checkNode = checked.has(neighbors[n])
+      if(checkNode === false){
+        queue.push(neighbors[n]);
+      }
     }
+    continue;
+  }
+  if(queue.length === 0){
+    console.log(`${target} is not here.`)
   }
 
 }
