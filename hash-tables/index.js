@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 "use strict";
 // HASH TABLE
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 // make a todo list using a hash table as an in-memory database.
 var HashTable = /** @class */ (function () {
@@ -21,7 +30,7 @@ var HashTable = /** @class */ (function () {
     HashTable.prototype.set_hashed_item = function (input, data) {
         var hash = this.additive_hashing(input);
         if (!this.check_item(input)) {
-            this.hash_arr[hash] = [hash, data];
+            this.hash_arr[hash] = __spreadArray([], data, true);
             return;
         }
     };

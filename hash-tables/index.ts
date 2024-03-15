@@ -3,7 +3,7 @@
 
 // make a todo list using a hash table as an in-memory database.
 export default class HashTable {
-  hash_arr: Array<[key: number, data: any]>;
+  hash_arr: Array<any>;
   constructor() {
     this.hash_arr = [];
   }
@@ -24,7 +24,7 @@ export default class HashTable {
   set_hashed_item(input: string, data: any) {
     const hash = this.additive_hashing(input);
     if (!this.check_item(input)) {
-      this.hash_arr[hash] = [hash, data];
+      this.hash_arr[hash] = [...data];
       return;
     }
   }

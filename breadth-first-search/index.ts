@@ -4,7 +4,7 @@ import HashTable from "../hash-tables";
 
 const hashTable = new HashTable();
 
-hashTable.set_hashed_item("you", ["alice", "bob", "claire"]);
+hashTable.set_hashed_item("root", ["alice", "bob", "claire"]);
 hashTable.set_hashed_item("bob", ["anuj", "peggy"]);
 hashTable.set_hashed_item("alice", ["peggy"]);
 hashTable.set_hashed_item("claire", ["thom", "jonny"]);
@@ -13,8 +13,8 @@ hashTable.set_hashed_item("peggy", []);
 hashTable.set_hashed_item("thom", []);
 hashTable.set_hashed_item("jonny", []);
 
-// go through each neighboring node from the root node "you"
-// neighboring of you ["alice","bob","claire"]
+// go through each neighboring node from the root node "root"
+// neighboring of root ["alice","bob","claire"]
 // go through each node and see if they are "Jonny"
 //
 // first -> alice
@@ -28,23 +28,28 @@ hashTable.set_hashed_item("jonny", []);
 // second -> peggy
 // second -> thom and jonny
 
-const you = hashTable.get_hashed_item("you");
-console.log(you);
+const root = hashTable.get_hashed_item("root");
+let queue:Array<string> = [...root]
+const target:string = "peggy"
 
-for (let i = 0; i < you[1].length; i++) {
-  if (you[1][i] !== "jonny") {
-    console.log(you[1].length);
-    const dequeuedNode = you[1].shift();
-    const neighbors = hashTable.get_hashed_item(dequeuedNode)[1];
-    console.log({ dequeuedNode, neighbors });
-    if (neighbors.length !== 0) {
-      for (let n = 0; n < neighbors.length; n++) {
-        you[1].push(neighbors[n]);
-      
-      console.log({ you });
-    }
-  } else {
-    console.log(you[1][i]);
+
+
+while (queue.length !== 0) {
+  // pop off first item
+  const dequeued = queue.shift() as string;
+  if(dequeued === target){
+    console.log(`${dequeued} is here!`)
+    break;
   }
+  console.log(dequeued)
+  console.log(queue)
+  const neighbors = hashTable.get_hashed_item(dequeued);
+  if(neighbors.length !== 0){
+    for(let n = 0; n < neighbors.length; n++){
+      queue.push(neighbors[n]);
+    }
+  }
+
 }
-console.log(you);
+
+
